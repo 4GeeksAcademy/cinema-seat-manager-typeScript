@@ -41,7 +41,36 @@ function showSeats(seatMap: number[][]): void {
   }
 }
 
-// Muestra cada fila y cada asiento con sus índices.
+function reserveSeat(row: number, column: number): void {
+  if (!Number.isInteger(row) || !Number.isInteger(column)) {
+    console.log("Reserva rechazada: la fila y la columna deben ser números enteros.");
+  } else if (row < 0 || row >= rowCount) {
+    console.log(`Reserva rechazada: la fila ${row} está fuera del rango 0-${rowCount - 1}.`);
+  } else if (column < 0 || column >= columnCount) {
+    console.log(`Reserva rechazada: la columna ${column} está fuera del rango 0-${columnCount - 1}.`);
+  } else if (seats[row][column] === 0) {
+    seats[row][column] = 1;
+    console.log(`Reserva exitosa: asiento en fila ${row}, columna ${column}.`);
+  } else if (seats[row][column] === 1) {
+    console.log(`Reserva rechazada: asiento en fila ${row}, columna ${column} ya está ocupado.`);
+  } else {
+    console.log(`Reserva rechazada: estado inválido en fila ${row}, columna ${column}.`);
+  }
+}
+
+console.log("\nPrueba 1: reserva válida");
+reserveSeat(2, 3);
+
+console.log("\nPrueba 2: reserva repetida");
+reserveSeat(2, 3);
+
+console.log("\nPrueba 3: coordenadas inválidas");
+reserveSeat(8, 10);
+
+console.log("\nPrueba 4: coordenadas decimales");
+reserveSeat(2.5, 4);
+
+// Muestra la matriz después de las pruebas de reserva.
 showSeats(seats);
 
 export {};
