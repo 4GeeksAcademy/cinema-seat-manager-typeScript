@@ -16,4 +16,32 @@ for (let row = 0; row < rowCount; row++) {
 const totalSeats = seats.reduce((total, seatRow) => total + seatRow.length, 0);
 console.log(`Total de posiciones: ${totalSeats}`);
 
+function showSeats(seatMap: number[][]): void {
+  console.log("        Columnas");
+  let columnHeader = "Filas | ";
+
+  for (let column = 0; column < columnCount; column++) {
+    columnHeader += `${column}  `;
+  }
+
+  console.log(columnHeader);
+
+  for (let row = 0; row < rowCount; row++) {
+    let rowDisplay = `${row}     | `;
+
+    for (let column = 0; column < columnCount; column++) {
+      if (seatMap[row][column] === 0) {
+        rowDisplay += "L  ";
+      } else {
+        rowDisplay += "X  ";
+      }
+    }
+
+    console.log(rowDisplay);
+  }
+}
+
+// Muestra cada fila y cada asiento con sus índices.
+showSeats(seats);
+
 export {};
