@@ -58,7 +58,8 @@ function reserveSeat(row: number, column: number): void {
   }
 }
 
-function showSeatCounts(seatMap: number[][]): void {
+// Cuenta y muestra los asientos; devuelve [disponibles, ocupados].
+function showSeatCounts(seatMap: number[][]): number[] {
   let availableSeats = 0;
   let occupiedSeats = 0;
 
@@ -75,9 +76,12 @@ function showSeatCounts(seatMap: number[][]): void {
 
   console.log(`Asientos disponibles: ${availableSeats}`);
   console.log(`Asientos ocupados: ${occupiedSeats}`);
+
+  return [availableSeats, occupiedSeats];
 }
 
-function findFirstFreePair(seatMap: number[][]): void {
+// Muestra y devuelve [fila, primera columna, segunda columna], o [] si no hay par.
+function findFirstFreePair(seatMap: number[][]): number[] {
   // Recorre filas y busca pares adyacentes sin cruzar a otra fila.
   for (let row = 0; row < rowCount; row++) {
     for (let column = 0; column < columnCount - 1; column++) {
@@ -85,12 +89,13 @@ function findFirstFreePair(seatMap: number[][]): void {
         console.log(
           `Hay disponibilidad: primer par libre en fila ${row}, columnas ${column} y ${column + 1}.`,
         );
-        return;
+        return [row, column, column + 1];
       }
     }
   }
 
   console.log("No hay asientos consecutivos disponibles.");
+  return [];
 }
 
 function createRoom(initialValue: number): number[][] {
