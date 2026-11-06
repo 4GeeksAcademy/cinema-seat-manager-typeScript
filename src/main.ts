@@ -70,6 +70,44 @@ reserveSeat(8, 10);
 console.log("\nPrueba 4: coordenadas decimales");
 reserveSeat(2.5, 4);
 
+function showSeatCounts(seatMap: number[][]): void {
+  let availableSeats = 0;
+  let occupiedSeats = 0;
+
+  // Cuenta cada asiento según su valor en la matriz.
+  for (let row = 0; row < rowCount; row++) {
+    for (let column = 0; column < columnCount; column++) {
+      if (seatMap[row][column] === 0) {
+        availableSeats++;
+      } else if (seatMap[row][column] === 1) {
+        occupiedSeats++;
+      }
+    }
+  }
+
+  console.log(`Asientos disponibles: ${availableSeats}`);
+  console.log(`Asientos ocupados: ${occupiedSeats}`);
+}
+
+function findFirstFreePair(seatMap: number[][]): void {
+  // Recorre filas y busca pares adyacentes sin cruzar a otra fila.
+  for (let row = 0; row < rowCount; row++) {
+    for (let column = 0; column < columnCount - 1; column++) {
+      if (seatMap[row][column] === 0 && seatMap[row][column + 1] === 0) {
+        console.log(
+          `Hay disponibilidad: primer par libre en fila ${row}, columnas ${column} y ${column + 1}.`,
+        );
+        return;
+      }
+    }
+  }
+
+  console.log("No hay asientos consecutivos disponibles.");
+}
+
+showSeatCounts(seats);
+findFirstFreePair(seats);
+
 // Muestra la matriz después de las pruebas de reserva.
 showSeats(seats);
 
