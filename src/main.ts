@@ -16,6 +16,7 @@ for (let row = 0; row < rowCount; row++) {
 const totalSeats = seats.reduce((total, seatRow) => total + seatRow.length, 0);
 console.log(`Total de posiciones: ${totalSeats}`);
 
+// Muestra la matriz con filas, columnas y el estado de cada asiento.
 function showSeats(seatMap: number[][]): void {
   console.log("        Columnas");
   let columnHeader = "Filas | ";
@@ -41,20 +42,33 @@ function showSeats(seatMap: number[][]): void {
   }
 }
 
-function reserveSeat(row: number, column: number): void {
+// Valida la posición y reserva el asiento si está disponible.
+function reserveSeat(row: number, column: number): string {
   if (!Number.isInteger(row) || !Number.isInteger(column)) {
-    console.log("Reserva rechazada: la fila y la columna deben ser números enteros.");
+    const message = "Reserva rechazada: la fila y la columna deben ser números enteros.";
+    console.log(message);
+    return message;
   } else if (row < 0 || row >= rowCount) {
-    console.log(`Reserva rechazada: la fila ${row} está fuera del rango 0-${rowCount - 1}.`);
+    const message = `Reserva rechazada: la fila ${row} está fuera del rango 0-${rowCount - 1}.`;
+    console.log(message);
+    return message;
   } else if (column < 0 || column >= columnCount) {
-    console.log(`Reserva rechazada: la columna ${column} está fuera del rango 0-${columnCount - 1}.`);
+    const message = `Reserva rechazada: la columna ${column} está fuera del rango 0-${columnCount - 1}.`;
+    console.log(message);
+    return message;
   } else if (seats[row][column] === 0) {
     seats[row][column] = 1;
-    console.log(`Reserva exitosa: asiento en fila ${row}, columna ${column}.`);
+    const message = `Reserva exitosa: asiento en fila ${row}, columna ${column}.`;
+    console.log(message);
+    return message;
   } else if (seats[row][column] === 1) {
-    console.log(`Reserva rechazada: asiento en fila ${row}, columna ${column} ya está ocupado.`);
+    const message = `Reserva rechazada: asiento en fila ${row}, columna ${column} ya está ocupado.`;
+    console.log(message);
+    return message;
   } else {
-    console.log(`Reserva rechazada: estado inválido en fila ${row}, columna ${column}.`);
+    const message = `Reserva rechazada: estado inválido en fila ${row}, columna ${column}.`;
+    console.log(message);
+    return message;
   }
 }
 
@@ -98,6 +112,7 @@ function findFirstFreePair(seatMap: number[][]): number[] {
   return [];
 }
 
+// Crea una matriz de 8x10 con el valor inicial indicado.
 function createRoom(initialValue: number): number[][] {
   const room: number[][] = [];
 
@@ -114,6 +129,7 @@ function createRoom(initialValue: number): number[][] {
   return room;
 }
 
+// Muestra la sala, los conteos y la búsqueda de asientos consecutivos.
 function showScenario(title: string): void {
   console.log(`\n=== ${title} ===`);
   showSeats(seats);
