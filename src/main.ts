@@ -1,6 +1,6 @@
 const rowCount = 8;
 const columnCount = 10;
-const seats: number[][] = [];
+let seats: number[][] = [];
 
 // Agrega 10 asientos libres a cada una de las 8 filas.
 for (let row = 0; row < rowCount; row++) {
@@ -58,18 +58,6 @@ function reserveSeat(row: number, column: number): void {
   }
 }
 
-console.log("\nPrueba 1: reserva válida");
-reserveSeat(2, 3);
-
-console.log("\nPrueba 2: reserva repetida");
-reserveSeat(2, 3);
-
-console.log("\nPrueba 3: coordenadas inválidas");
-reserveSeat(8, 10);
-
-console.log("\nPrueba 4: coordenadas decimales");
-reserveSeat(2.5, 4);
-
 function showSeatCounts(seatMap: number[][]): void {
   let availableSeats = 0;
   let occupiedSeats = 0;
@@ -105,10 +93,57 @@ function findFirstFreePair(seatMap: number[][]): void {
   console.log("No hay asientos consecutivos disponibles.");
 }
 
-showSeatCounts(seats);
-findFirstFreePair(seats);
+function createRoom(initialValue: number): number[][] {
+  const room: number[][] = [];
 
-// Muestra la matriz después de las pruebas de reserva.
-showSeats(seats);
+  for (let row = 0; row < rowCount; row++) {
+    const seatRow: number[] = [];
+
+    for (let column = 0; column < columnCount; column++) {
+      seatRow.push(initialValue);
+    }
+
+    room.push(seatRow);
+  }
+
+  return room;
+}
+
+function showScenario(title: string): void {
+  console.log(`\n=== ${title} ===`);
+  showSeats(seats);
+  showSeatCounts(seats);
+  findFirstFreePair(seats);
+}
+
+const emptyRoom = seats;
+const partiallyOccupiedRoom = createRoom(0);
+partiallyOccupiedRoom[0][0] = 1;
+partiallyOccupiedRoom[1][8] = 1;
+
+const almostFullRoom = createRoom(1);
+for (let row = 0; row < rowCount; row++) {
+  almostFullRoom[row][4] = 0;
+}
+
+const fullRoom = createRoom(1);
+
+seats = emptyRoom;
+showScenario("Escenario 1: sala vacía");
+
+seats = partiallyOccupiedRoom;
+console.log("\n=== PRUEBAS DE RESERVA ===");
+reserveSeat(2, 3);
+reserveSeat(0, 0);
+reserveSeat(8, 10);
+reserveSeat(2, 10);
+reserveSeat(2.5, 4);
+showScenario("Escenario 2: sala parcialmente ocupada");
+
+seats = almostFullRoom;
+showScenario("Escenario 3: sala casi llena sin pares contiguos");
+
+seats = fullRoom;
+showScenario("Escenario 4: sala completamente llena");
 
 export {};
